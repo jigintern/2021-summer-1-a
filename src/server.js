@@ -7,9 +7,10 @@ export class MyServer extends Server {
 
     switch (to) {
       // キーワードから施設を検索
-      case "searchHotels":
+      case "searchHotels": {
         const results = SearchHotels(req.keyword, req.count);
         return results;
+      }
     }
   }
 }
