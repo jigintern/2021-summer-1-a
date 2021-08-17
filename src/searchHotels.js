@@ -28,11 +28,11 @@ export async function SearchHotels(keyword, count) {
 
     return {
       name: info.hotelName,
-      desc: info.hotelSpecial,
+      desc: info.hotelSpecial || "",
       tel: info.telephoneNo,
       address: `${info.address1}${info.address2}`,
-      infoUrl: info.hotelInformationUrl,
-      planUrl: info.planListUrl,
+      infoUrl: info.hotelInformationUrl || "",
+      planUrl: info.planListUrl || "",
       imageUrl: info.hotelImageUrl,
       reviewAvg: info.reviewAverage || 0,
       reviewText: info.userReview || "",
