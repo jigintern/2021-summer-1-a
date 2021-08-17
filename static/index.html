@@ -1,19 +1,54 @@
-<h1>DenoでシンプルなBBS</h1>
-<input id=inp>
-<button id=btn>send</button>
-<input id=inp2>
-<button id=btn2>send2</button>
-<div id=divname></div>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+<body>
+    <button id="btn">画像を表示</button>
+    <div id="place"></div>
+    
+</body>
+</html>
+
 <script type=module>
-import {fetchJSON} from "https://js.sabae.cc/fetchJSON.js";
-btn.onclick = async() => {
-    const data = await fetchJSON("api/test",{mes:inp.value});
-    console.log(data);
-    divname.textContent = data;
-};
-btn2.onclick = async() => {
-    const data = await fetchJSON("api/aaa",{mes:"GG"});
-    console.log(data);
-    divname.textContent = data;
-};
+    import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
+
+    const data = await fetchJSON("test.json");
+    
+    
+   /*
+    btn.onclick =async()=>{
+        
+        let img_element = document.getElementById('place');
+        
+        
+        let new_element = document.createElement('img');
+        new_element.src = "../東京タワー.jpeg";
+      
+        img_element.appendChild(new_element);
+    }
+    */
+    let i=0;
+   while (data[i] != null){
+        let img_element = document.getElementById('place');
+        
+        
+        let new_element = document.createElement('img');
+        new_element.src = data[i].place;
+        new_element.width = data[i].view*10;
+        new_element.height = data[i].view*10;
+        new_element.style.objectFit="cover";
+
+        console.log(new_element.width);
+        console.log(new_element.height);
+        
+      
+        img_element.appendChild(new_element);
+
+
+        i++;
+
+   }
 </script>
