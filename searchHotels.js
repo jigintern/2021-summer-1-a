@@ -1,4 +1,10 @@
-// キーワードからホテル・宿を検索（楽天トラベルキーワード検索API）
+/**
+ * キーワードからホテル・宿を検索（楽天トラベルキーワード検索API）
+ *
+ * @param {string} keyword キーワード
+ * @param {number} count 取得件数
+ * @returns ホテルのリスト
+ */
 export async function SearchHotels(keyword, count) {
   const appId = "xxxx";
 
