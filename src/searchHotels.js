@@ -6,7 +6,7 @@
  * @returns ホテルのリスト
  */
 export async function SearchHotels(keyword, count) {
-  const appId = "xxxx";
+  const appId = Deno.env.get("RAKUTEN_APP_ID");
 
   // 取得件数
   const hits = count || 10;
@@ -41,5 +41,3 @@ export async function SearchHotels(keyword, count) {
 
   return results;
 }
-
-// console.log(await SearchHotels("oosaka"));
