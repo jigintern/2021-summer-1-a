@@ -1,5 +1,8 @@
 import { Server } from "https://js.sabae.cc/Server.js";
-import { getPictures } from "./getPicture.js";
+import {
+  searchPicsFromKeyword,
+  searchPicsFromHashtag,
+} from "./searchPictures.js";
 import {
   searchHotelsFromKeyword,
   searchHotelsFromGeo,
@@ -12,15 +15,15 @@ export class MyServer extends Server {
     switch (to) {
       // キーワードから施設を検索
       case "searchHotels": {
-        const results = req?.keyword
+        return req?.keyword
           ? searchHotelsFromKeyword(req.keyword, req.count)
           : searchHotelsFromGeo(req.lat, req.lng, req.count);
-        return results;
       }
       // 人気の観光地の画像を取得
       case "getPictures": {
-        const results = getPictures(req?.tags, req?.orderBy, req.count);
-        return results;
+        return req?.keyword
+          ? searchPicsFromKeyword(req.keyword, req?.orderBy, req.count)
+          : searchPicsFromHashtag(req?.tags, req?.orderBy, req.count);
       }
     }
   }
