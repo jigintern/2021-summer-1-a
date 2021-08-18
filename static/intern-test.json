@@ -1,0 +1,15 @@
+[
+	
+		{
+			"name":"東京タワー",
+			"place": "server/東京タワー.jpeg", 
+		 	"view" :20
+		},
+    
+		
+		{
+			"name":"雷門",
+			"place" : "server/雷門.jpeg",
+			"view" : 10
+		}
+]
