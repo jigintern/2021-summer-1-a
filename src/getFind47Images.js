@@ -1,3 +1,4 @@
+import { Geo3x3 } from "https://taisukef.github.io/Geo3x3/Geo3x3.js";
 import { CSV } from "https://js.sabae.cc/CSV.js";
 
 // あんまりよくない（起動しっぱなしだと更新されないので）
@@ -23,11 +24,12 @@ export async function getFind47Images(keyword) {
         view: img.count_view,
         url: img.url,
         authorurl: img.authorurl,
-        // geo: e.Geo3x3,
+        geo: {
+          ...Geo3x3.decode(img.Geo3x3),
+          exists: true,
+        },
       };
     });
 
   return results;
 }
-
-// console.log(await FetchFind47Images("神戸"));
