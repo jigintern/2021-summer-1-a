@@ -14,7 +14,7 @@ export class MyServer extends Server {
       }
       // 人気の観光地の画像を取得
       case "getPictures": {
-        const results = getPictures(req.count);
+        const results = getPictures(req?.tags, req?.orderBy, req.count);
         return results;
       }
     }

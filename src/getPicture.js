@@ -39,11 +39,11 @@ async function getPictureJson(keyword) {
 /**
  * Instagramの人気ハッシュタグから関連する画像を取得
  * @param {string} tagNames 検索するタグ名（複数の場合は半角スペースで区切る 指定無しなら "#旅行"）
- * @param {string} sort ソート順（昇順 : asc | 降順 : desc）
+ * @param {string} orderBy ソート順（昇順 : asc | 降順 : desc）
  * @param {number} count 取得件数
  * @returns
  */
-export async function getPictures(tagNames, sort, count) {
+export async function getPictures(tagNames, orderBy, count) {
   let pictures = [];
 
   // ハッシュタグ取得
@@ -72,7 +72,7 @@ export async function getPictures(tagNames, sort, count) {
 
   // 並び替え
   pictures.sort((a, b) =>
-    sort === "desc" ? b.view - a.view : a.view - b.view
+    orderBy === "desc" ? b.view - a.view : a.view - b.view
   );
 
   return pictures;
