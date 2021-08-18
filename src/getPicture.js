@@ -1,8 +1,14 @@
-import { getHashtag } from "./getHashtag.js";
+import { getHashtag } from "./searchHashtag.js";
 import { getFind47Images } from "./getFind47Images.js";
 
 let hashtags = [];
 
+/**
+ * キーワードから画像を検索
+ *
+ * @param {string} keyword キーワード
+ * @returns 画像のURLとタグのJSON
+ */
 async function getPictureJson(keyword) {
   const key = Deno.env.get("PIXABAY_KEY");
   const url = `https://pixabay.com/api/?key=${key}&q=${encodeURIComponent(
@@ -30,6 +36,11 @@ async function getPictureJson(keyword) {
   }
 }
 
+/**
+ * Instagramの人気ハッシュタグから関連する画像を取得
+ * @param {number} count 取得件数
+ * @returns
+ */
 export async function getPictures(count) {
   let results = [];
 
