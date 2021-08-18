@@ -7,6 +7,9 @@
 </head>
 <body>
     <div id="place"></div>
+    <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
+<a href="https://webservice.rakuten.co.jp/" target="_blank"><img src="https://webservice.rakuten.co.jp/img/credit/200709/credit_31130.gif" border="0" alt="楽天ウェブサービスセンター" title="楽天ウェブサービスセンター" width="311" height="30"/></a>
+<!-- Rakuten Web Services Attribution Snippet TO HERE -->
     
 </body>
 </html>
@@ -19,13 +22,16 @@
     opacity: 0.6;
     transition-duration: 0.3s;
     }
+    .img_wrap {
+        float:left;
+    }
 
 </style>
 
 <script type=module>
     import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
 
-    const data = await fetchJSON("test.json");
+    const data = await fetchJSON("/api/getPictures", { count: 40 });
     
     
    /*
@@ -48,26 +54,48 @@
 
         let img_parent = document.getElementById('place');
         let new_div = document.createElement('div');
-        let size = data[i].view*10;
+        let size = data[i].view;
+        if(size>1500){
+            size=400;
+        }else if(size>500){
+            size=400;
+        }else if(size>200){
+            size=200;
+        }else{
+            size=100;
+        }
+
+    
         new_div.style.width=size+"px";
         new_div.style.height=size+"px";
         new_div.className='img_wrap';
-        new_div.id='image'+i;
+        new_div.id='data['+i+']';
         new_div.style.background="#000";
         img_parent.appendChild(new_div);
 
-        console.log(new_div.width);
+        console.log(data[i].view);
         console.log(new_div.height);
 
-        let img_element = document.getElementById('image'+i);
+        let img_element = document.getElementById('data['+i+']');
         let new_element = document.createElement('img');
+        new_element.className="explain"
         new_element.src = data[i].place;
-        new_element.width = data[i].view*10;
-        new_element.height = data[i].view*10;
+        new_element.width = size;
+        new_element.height = size;
         new_element.style.objectFit="cover";
+        
+        let json_text=JSON.stringify(data[i].title)
+        new_element.onclick = function() {
+            
+            let struc = await fetchJSON("api/searchHotels", {keyword: "平久保崎", count: 20,});
+
+        };
         img_element.appendChild(new_element);
 
         i++;
 
     }
+
+
+
 </script>
