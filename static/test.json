@@ -1,4 +1,16 @@
+
 [
-    {"place" : "../東京タワー.jpeg", "view" : "20"},
-    {"place" : "../雷門.jpeg", "view" : "10"}
+	
+    {
+        "name":"東京タワー",
+        "place": "../東京タワー.jpeg", 
+         "view" :20
+    },
+
+    
+    {
+        "name":"雷門",
+        "place" : "../雷門.jpeg",
+        "view" : 10
+    }
 ]
