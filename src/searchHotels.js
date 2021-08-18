@@ -1,3 +1,5 @@
+import { getAdressFromGeo } from "./getAdress.js";
+
 /**
  * キーワードからホテル・宿を検索（楽天トラベルキーワード検索API）
  *
@@ -5,7 +7,7 @@
  * @param {number} count 取得件数
  * @returns ホテルのリスト
  */
-export async function SearchHotels(keyword, count) {
+export async function searchHotelsFromKeyword(keyword, count) {
   const appId = Deno.env.get("RAKUTEN_APP_ID");
 
   // 取得件数
@@ -40,4 +42,20 @@ export async function SearchHotels(keyword, count) {
   });
 
   return results;
+}
+
+/**
+ * 位置情報からホテル・宿を検索
+ *
+ * @param {number} lat 緯度
+ * @param {number} lng 経度
+ * @param {number} count 取得件数
+ */
+export async function searchHotelsFromGeo(lat, lng, count) {
+  const address = await getAdressFromGeo(lat, lng);
+
+  // エラー！
+  if (address === "") return [];
+
+  return searchHotelsFromKeyword(address, count);
 }

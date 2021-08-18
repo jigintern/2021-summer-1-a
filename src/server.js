@@ -1,6 +1,9 @@
 import { Server } from "https://js.sabae.cc/Server.js";
-import { SearchHotels } from "./searchHotels.js";
 import { getPictures } from "./getPicture.js";
+import {
+  searchHotelsFromKeyword,
+  searchHotelsFromGeo,
+} from "./searchHotels.js";
 
 export class MyServer extends Server {
   api(path, req) {
@@ -9,7 +12,9 @@ export class MyServer extends Server {
     switch (to) {
       // キーワードから施設を検索
       case "searchHotels": {
-        const results = SearchHotels(req.keyword, req.count);
+        const results = req?.keyword
+          ? searchHotelsFromKeyword(req.keyword, req.count)
+          : searchHotelsFromGeo(req.lat, req.lng, req.count);
         return results;
       }
       // 人気の観光地の画像を取得
