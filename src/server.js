@@ -1,6 +1,6 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 import { SearchHotels } from "./searchHotels.js";
-import { SearchTag } from "./searchHashtag.js";
+import { getHashtag } from "./searchHashtag.js";
 import { getPictureJson } from "./searchPictureFromPixabay.js";
 
 export class MyServer extends Server {
@@ -14,7 +14,7 @@ export class MyServer extends Server {
         return results;
       }
       case "searchHashTag":{
-        const results = SearchTag(req.keyword,req.count);
+        const results = getHashtag(req.keyword,req.count);
         return results;
       }
       case "searchPictureFromPixabay":{
