@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>東京スカイツリー</title>
+</head>
+
+<body>
+	<div id='place'></div>
+<h1>観光地おすすめ</h1>
+
+<script type=module language="javascript" type="text/javascript">
+import {fetchJSON}from "https://js.sabae.cc/fetchJSON.js";
+var picture_list=[];
+
+
+const data =await fetchJSON("test.json");
+//$.getJSON(url,(data) => {
+	
+	data.sort(function(val1,val2){
+			var val1=val1.view;
+			var val2=val2.view;
+			if(val1<val2){
+				return 1;
+			} else {
+				return -1;
+			}
+	});
+	for(let i=0;i<data.length;i++){
+		picture_list.push(data[i].place);
+	} 
+	console.log(picture_list);
+	
+	let i=0;
+    for(i=0;i<picture_list.length;i++)
+    {
+        let img_element = document.getElementById('place');
+        let new_element = document.createElement('img');
+        new_element.src=picture_list[i];
+
+        img_element.appendChild(new_element);
+    }
+</script>
+</body>
+</html>
