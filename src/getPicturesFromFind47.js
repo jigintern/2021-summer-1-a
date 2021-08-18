@@ -4,7 +4,7 @@ import { CSV } from "https://js.sabae.cc/CSV.js";
 // あんまりよくない（起動しっぱなしだと更新されないので）
 let imgList = {};
 
-export async function getFind47Images(keyword) {
+export async function getPicturesFromFind47(keyword) {
   // 画像リストを読込む
   if (Object.keys(imgList).length === 0) {
     imgList = CSV.toJSON(
