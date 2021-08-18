@@ -6,11 +6,21 @@
     <title>test</title>
 </head>
 <body>
-    <button id="btn">画像を表示</button>
     <div id="place"></div>
     
 </body>
 </html>
+<style>
+    .img_wrap img{
+    cursor: pointer;
+    transition-duration: 0.3s;
+    }
+    .img_wrap:hover img{
+    opacity: 0.6;
+    transition-duration: 0.3s;
+    }
+
+</style>
 
 <script type=module>
     import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
@@ -31,24 +41,33 @@
     }
     */
     let i=0;
-   while (data[i] != null){
-        let img_element = document.getElementById('place');
-        
-        
+
+
+    while (data[i] != null){
+
+
+        let img_parent = document.getElementById('place');
+        let new_div = document.createElement('div');
+        let size = data[i].view*10;
+        new_div.style.width=size+"px";
+        new_div.style.height=size+"px";
+        new_div.className='img_wrap';
+        new_div.id='image'+i;
+        new_div.style.background="#000";
+        img_parent.appendChild(new_div);
+
+        console.log(new_div.width);
+        console.log(new_div.height);
+
+        let img_element = document.getElementById('image'+i);
         let new_element = document.createElement('img');
         new_element.src = data[i].place;
         new_element.width = data[i].view*10;
         new_element.height = data[i].view*10;
         new_element.style.objectFit="cover";
-
-        console.log(new_element.width);
-        console.log(new_element.height);
-        
-      
         img_element.appendChild(new_element);
-
 
         i++;
 
-   }
+    }
 </script>
