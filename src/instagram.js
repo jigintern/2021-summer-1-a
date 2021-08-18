@@ -61,10 +61,11 @@ export class Instagram{
 }
 
 /// example
-
+/*
 const ins = new Instagram();
 await ins.build();
-await ins.login({username:"08098109092",password:"Kazuryuu0907"});
+await ins.login();
 console.log(await ins.getLocation("https://www.instagram.com/p/CSqCH3whMpy/"));
 console.log(await ins.getLocation("https://www.instagram.com/p/CSshQbZpNHR/"));
 ins.page.close();
+*/
