@@ -1,7 +1,6 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 import { SearchHotels } from "./searchHotels.js";
-import { getHashtag } from "./searchHashtag.js";
-import { getPictureJson } from "./searchPictureFromPixabay.js";
+import { getPictures } from "./getPicture.js";
 
 export class MyServer extends Server {
   api(path, req) {
@@ -13,13 +12,10 @@ export class MyServer extends Server {
         const results = SearchHotels(req.keyword, req.count);
         return results;
       }
-      case "searchHashTag":{
-        const results = getHashtag(req.keyword,req.count);
+      // 人気の観光地の画像を取得
+      case "getPictures": {
+        const results = getPictures(req.count);
         return results;
-      }
-      case "searchPictureFromPixabay":{
-        const result = getPictureJson(req.keyword);
-        return result;
       }
     }
   }
