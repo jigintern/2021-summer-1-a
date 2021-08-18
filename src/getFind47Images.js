@@ -1,16 +1,15 @@
 import { CSV } from "https://js.sabae.cc/CSV.js";
 
+// あんまりよくない（起動しっぱなしだと更新されないので）
 let imgList = {};
 
-async function FetchFind47Images(keyword) {
+export async function getFind47Images(keyword) {
   // 画像リストを読込む
-  // if (!imgList) {
-  // }
-
-  // TODO: 毎回パースしてるのでどうにかする！
-  imgList = await CSV.toJSON(
-    await CSV.fetch("https://code4fukui.github.io/find47/find47images.csv")
-  );
+  if (Object.keys(imgList).length === 0) {
+    imgList = CSV.toJSON(
+      await CSV.fetch("https://code4fukui.github.io/find47/find47images.csv")
+    );
+  }
 
   // タイトルと県名にキーワードが含まれるものを抽出
   const results = imgList
@@ -31,4 +30,4 @@ async function FetchFind47Images(keyword) {
   return results;
 }
 
-console.log(await FetchFind47Images("神戸"));
+// console.log(await FetchFind47Images("神戸"));
