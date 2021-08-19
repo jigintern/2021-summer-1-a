@@ -23,7 +23,12 @@ export class MyServer extends Server {
       // 人気の観光地の画像を取得
       case "getPictures": {
         return req?.keyword
-          ? searchPicsFromKeyword(req.keyword, req?.orderBy, req.count)
+          ? searchPicsFromKeyword(
+              req.keyword,
+              req?.orderBy,
+              req.count,
+              req?.usePixabay
+            )
           : searchPicsFromHashtag(req?.tags, req?.orderBy, req.count);
       }
       // 付近の観光地のurlを取得
