@@ -13,7 +13,7 @@ export async function getPicturesFromFind47(keyword) {
   // 画像リストを読込む
   if (Object.keys(imgList).length === 0) {
     imgList = CSV.toJSON(
-      await CSV.fetch("https://code4fukui.github.io/find47/find47images.csv")
+      await CSV.fetch("https://code4fukui.github.io/find47/find47images.csv"),
     );
   }
 

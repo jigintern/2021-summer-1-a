@@ -7,9 +7,11 @@ import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
  * @returns ハッシュタグの配列
  */
 export async function searchHashtag(keyword) {
-  const url = `https://instagram.userlocal.jp/hashtags/search?hashtags=${encodeURIComponent(
-    keyword
-  )}`;
+  const url = `https://instagram.userlocal.jp/hashtags/search?hashtags=${
+    encodeURIComponent(
+      keyword,
+    )
+  }`;
   const res = await fetch(url);
   const html = await res.text();
   //console.log(html);

@@ -1,12 +1,12 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 import { findNerlyPlace } from "./findNerlyPlace.js";
 import {
-  searchPicsFromKeyword,
   searchPicsFromHashtag,
+  searchPicsFromKeyword,
 } from "./searchPictures.js";
 import {
-  searchHotelsFromKeyword,
   searchHotelsFromGeo,
+  searchHotelsFromKeyword,
 } from "./searchHotels.js";
 
 export class MyServer extends Server {
@@ -24,11 +24,11 @@ export class MyServer extends Server {
       case "getPictures": {
         return req?.keyword
           ? searchPicsFromKeyword(
-              req.keyword,
-              req?.orderBy,
-              req.count,
-              req?.usePixabay
-            )
+            req.keyword,
+            req?.orderBy,
+            req.count,
+            req?.usePixabay,
+          )
           : searchPicsFromHashtag(req?.tags, req?.orderBy, req.count);
       }
       // 付近の観光地のurlを取得

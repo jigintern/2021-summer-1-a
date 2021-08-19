@@ -17,7 +17,8 @@ export async function searchHotelsFromKeyword(keyword, count) {
   const hits = count || 10;
 
   const encodedKeyword = encodeURIComponent(keyword);
-  const url = `https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426?format=json&keyword=${encodedKeyword}&hits=${hits}&applicationId=${appId}`;
+  const url =
+    `https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426?format=json&keyword=${encodedKeyword}&hits=${hits}&applicationId=${appId}`;
 
   const res = await fetch(url);
   const json = await res.json();

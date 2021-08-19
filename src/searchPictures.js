@@ -46,7 +46,7 @@ export async function searchPicsFromKeyword(
   keyword,
   orderBy,
   count,
-  usePixabay
+  usePixabay,
 ) {
   if (keyword === "" || count <= 0) return [];
 
@@ -61,7 +61,6 @@ export async function searchPicsFromKeyword(
   // 画像数が取得件数に満たない場合、pixabayで検索
   if (usePixabay && pictures.length < count) {
     pictures = pictures.concat(await getPicturesFromPixabay(keyword));
-  
   }
 
   // 配列の要素がcount以上なら切り取る
@@ -94,7 +93,7 @@ export async function searchPicsFromHashtag(tagNames, orderBy, count) {
 
   for (const tag of hashtags) {
     pictures = pictures.concat(
-      await searchPicsFromKeyword(tag, "none", count, false)
+      await searchPicsFromKeyword(tag, "none", count, false),
     );
 
     // 配列の要素がcount以上ならbreak

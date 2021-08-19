@@ -9,9 +9,11 @@
  */
 export async function getPicturesFromPixabay(keyword) {
   const key = Deno.env.get("PIXABAY_KEY");
-  const url = `https://pixabay.com/api/?key=${key}&q=${encodeURIComponent(
-    keyword
-  )}`;
+  const url = `https://pixabay.com/api/?key=${key}&q=${
+    encodeURIComponent(
+      keyword,
+    )
+  }`;
   try {
     const res = await fetch(url);
     const json = await res.json();
