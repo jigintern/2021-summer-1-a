@@ -7,6 +7,7 @@ import {
   searchHotelsFromKeyword,
   searchHotelsFromGeo,
 } from "./searchHotels.js";
+import { findNerlyPlace } from "./findNerlyPlace.js";
 
 export class MyServer extends Server {
   api(path, req) {
@@ -29,11 +30,6 @@ export class MyServer extends Server {
       case "findNerlyPlace": {
         request = {categori:"all",lat:req.lat,lon:req.lon};
         const results = findNerlyPlace(request,req.count);
-        return results;
-      }
-      //　関連したハッシュタグを取得
-      case "getHashtag": {
-        const results = getHashtag(req.keyword);
         return results;
       }
     }
