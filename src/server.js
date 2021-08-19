@@ -1,4 +1,5 @@
 import { Server } from "https://js.sabae.cc/Server.js";
+import { findNerlyPlace } from "./findNerlyPlace.js";
 import {
   searchPicsFromKeyword,
   searchPicsFromHashtag,
@@ -7,7 +8,6 @@ import {
   searchHotelsFromKeyword,
   searchHotelsFromGeo,
 } from "./searchHotels.js";
-import { findNerlyPlace } from "./findNerlyPlace.js";
 
 export class MyServer extends Server {
   api(path, req) {
@@ -28,8 +28,8 @@ export class MyServer extends Server {
       }
       // 付近の観光地のurlを取得
       case "findNerlyPlace": {
-        request = {categori:"all",lat:req.lat,lon:req.lon};
-        const results = findNerlyPlace(request,req.count);
+        const request = { categori: "all", lat: req.lat, lon: req.lon };
+        const results = findNerlyPlace(request, req.count);
         return results;
       }
     }
