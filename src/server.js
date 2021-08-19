@@ -27,11 +27,11 @@ export class MyServer extends Server {
       }
       // 付近の観光地のurlを取得
       case "findNerlyPlace": {
-        request = {categori:"all",lat:req.lat,lon:req.lon};
-        const results = findNerlyPlace(request,req.count);
+        request = { categori: "all", lat: req.lat, lon: req.lon };
+        const results = findNerlyPlace(request, req.count);
         return results;
       }
-      //　関連したハッシュタグを取得
+      // 関連したハッシュタグを取得
       case "getHashtag": {
         const results = getHashtag(req.keyword);
         return results;
