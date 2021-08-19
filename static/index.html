@@ -1,282 +1,278 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test</title>
-</head>
-<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-<body>
-    <table width="508">
-      <tbody>
-        <tr>
-          <td height="24" width="300">
-            <input
-              type="text"
-              name="search_text"
-              id="id_search_text"
-              size="40"
-            />
-          </td>
-		  <td>
-			<select name="sort" id="id_sort">
-				<option value="desc">降順</option>
-				<option value="asc">昇順</option>
-				<option value="rand">ランダム</option>
-			</select>
-		  </td>
-          <td>
-            <button name="search_button" id="id_search_button">検索</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>test</title>
+    </head>
+    <link
+        href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
+        rel="stylesheet"
+    />
+    <body>
+        <table width="508">
+            <tbody>
+                <tr>
+                    <td height="24" width="300">
+                        <input
+                            type="text"
+                            name="search_text"
+                            id="id_search_text"
+                            size="40"
+                        />
+                    </td>
+                    <td>
+                        <select name="sort" id="id_sort">
+                            <option value="desc">降順</option>
+                            <option value="asc">昇順</option>
+                            <option value="rand">ランダム</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button name="search_button" id="id_search_button">
+                            検索
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
-    <a href="https://webservice.rakuten.co.jp/" target="_blank"
-      ><img
-        src="https://webservice.rakuten.co.jp/img/credit/200709/credit_31130.gif"
-        border="0"
-        alt="楽天ウェブサービスセンター"
-        title="楽天ウェブサービスセンター"
-        width="311"
-        height="30"
-    /></a>
-    <!-- Rakuten Web Services Attribution Snippet TO HERE -->
-    <div id="place"></div>
-  </body>
+        <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
+        <a href="https://webservice.rakuten.co.jp/" target="_blank"
+            ><img
+                src="https://webservice.rakuten.co.jp/img/credit/200709/credit_31130.gif"
+                border="0"
+                alt="楽天ウェブサービスセンター"
+                title="楽天ウェブサービスセンター"
+                width="311"
+                height="30"
+        /></a>
+        <!-- Rakuten Web Services Attribution Snippet TO HERE -->
+        <div id="place"></div>
+    </body>
 </html>
 <style>
-    .img_wrap img{
-    cursor: pointer;
-    transition-duration: 0.3s;
+    .img_wrap img {
+        cursor: pointer;
+        transition-duration: 0.3s;
     }
-    .img_wrap:hover img{
-    opacity: 0.6;
-    transition-duration: 0.3s;
+    .img_wrap:hover img {
+        opacity: 0.6;
+        transition-duration: 0.3s;
     }
     .img_wrap {
-        float:left;
+        float: left;
     }
     .popup {
-    position: fixed;
-    left: 0;
-    top: 0;
-     width: 100%;
-    height: 100%;
-    z-index: 9999;
-    opacity: 0;
-    visibility: hidden;
-    transition: .6s;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.6s;
     }
     .popup.is-show {
-    opacity: 1;
-    visibility: visible;
+        opacity: 1;
+        visibility: visible;
     }
     .popup-inner {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    width: 80%;
-    max-width: 600px;
-    padding: 50px;
-    background-color: #fff;
-    z-index: 2;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 600px;
+        padding: 50px;
+        background-color: #fff;
+        z-index: 2;
     }
     .popup-inner img {
-    width: 100%;
+        width: 100%;
     }
     .close-btn {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        cursor: pointer;
     }
     .close-btn i {
-    font-size: 20px;
-    color: #333;
+        font-size: 20px;
+        color: #333;
     }
     .black-background {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,.8);
-    z-index: 1;
-    cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1;
+        cursor: pointer;
     }
 </style>
 ​
-<script type=module>
-    import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
+<script type="module">
+    import { fetchJSON } from 'https://js.sabae.cc/fetchJSON.js';
     function img_remove() {
-        let all_element = document.querySelectorAll(".img_wrap");
+        let all_element = document.querySelectorAll('.img_wrap');
         all_element.forEach((element) => {
             element.remove();
         });
     }
     async function search_function() {
-      const textbox = document.getElementById("id_search_text");
-      const sort=document.getElementById("id_sort")
-      const sort_num=sort.selectedIndex
-      const data = await fetchJSON("/api/getPictures", {
-      keyword: textbox.value,
-      orderBy:sort.options[sort_num].value,
-      count: 200,
-    });
-    let i=0;
-    while (data[i] != null){
-        let img_parent = document.getElementById('place');
-        let new_div = document.createElement('div');
-        let size = data[i].view;
-        if(size>1500){
-            size=400;
-        }else if(size>500){
-            size=400;
-        }else if(size>200){
-            size=200;
-        }else{
-            size=100;
+        const textbox = document.getElementById('id_search_text');
+        const sort = document.getElementById('id_sort');
+        const sort_num = sort.selectedIndex;
+        const data = await fetchJSON('/api/getPictures', {
+            keyword: textbox.value,
+            orderBy: sort.options[sort_num].value,
+            count: 200
+        });
+        let i = 0;
+        while (data[i] != null) {
+            let img_parent = document.getElementById('place');
+            let new_div = document.createElement('div');
+            let size = data[i].view;
+            if (size > 1500) {
+                size = 400;
+            } else if (size > 500) {
+                size = 400;
+            } else if (size > 200) {
+                size = 200;
+            } else {
+                size = 100;
+            }
+
+            new_div.style.width = size + 'px';
+            new_div.style.height = size + 'px';
+            new_div.className = 'img_wrap';
+            new_div.id = 'data[' + i + ']';
+            new_div.style.background = '#000';
+            new_div;
+            img_parent.appendChild(new_div);
+            //console.log(data[i].view);
+            //console.log(new_div.height);
+
+            let img_element = document.getElementById('data[' + i + ']');
+            let new_element = document.createElement('img');
+            new_element.id = 'img' + i;
+            new_element.className = 'explain';
+            new_element.src = data[i].place;
+            new_element.width = size;
+            new_element.height = size;
+            new_element.style.objectFit = 'cover';
+
+            // 画像クリックしたときの処理
+            const elmData = data[i];
+            new_element.onclick = async function () {
+                //const elmData = data[i];
+                let a = this.id;
+                popupImage(a);
+                console.log(elmData);
+
+                if (!elmData.geo.exists) return;
+
+                const hotels = await fetchJSON('/api/searchHotels', {
+                    lat: elmData.geo.lat,
+                    lng: elmData.geo.lng,
+                    count: 20
+                });
+                console.log(hotels);
+
+                const spots = await fetchJSON('/api/findNerlyPlace', {
+                    lat: elmData.geo.lat,
+                    lon: elmData.geo.lng,
+                    count: 20
+                });
+                console.log(spots);
+            };
+
+            let json_text = data[i].pref;
+            img_element.appendChild(new_element);
+
+            let pop_element = document.getElementById('data[' + i + ']');
+            let new_pop = document.createElement('div');
+            new_pop.className = 'popup';
+            new_pop.id = 'js-popup' + i;
+            pop_element.appendChild(new_pop);
+
+            let inner_element = document.getElementById('js-popup' + i);
+            let inner_div = document.createElement('div');
+            inner_div.className = 'popup-inner';
+            inner_div.id = 'popup-inner' + i;
+            inner_element.appendChild(inner_div);
+
+            let background = document.getElementById('js-popup' + i);
+            let backchi = document.createElement('div');
+            backchi.className = 'black-background';
+            backchi.id = 'js-black-bg' + i;
+            background.appendChild(backchi);
+
+            i++;
         }
 
-        new_div.style.width=size+"px";
-        new_div.style.height=size+"px";
-        new_div.className='img_wrap';
-        new_div.id='data['+i+']';
-        new_div.style.background="#000";
-        new_div
-        img_parent.appendChild(new_div);
-        //console.log(data[i].view);
-        //console.log(new_div.height);
+        let j = i;
+        i = 0;
+        while (i != j) {
+            let divobj = document.getElementById('popup-inner' + i);
+            let divchi = document.createElement('div');
+            divchi.className = 'close-btn';
+            divchi.id = 'js-close-btn' + i;
+            divchi.onclick = function () {
+                let test = this.id;
+                popupImage(test);
+            };
+            divobj.appendChild(divchi);
 
-        let img_element = document.getElementById('data['+i+']');
-        let new_element = document.createElement('img');
-        new_element.id = 'img'+i;
-        new_element.className="explain";
-        new_element.src = data[i].place;
-        new_element.width = size;
-        new_element.height = size;
-        new_element.style.objectFit="cover";
+            let iobj = document.getElementById('js-close-btn' + i);
+            let ichi = document.createElement('i');
+            ichi.className = 'fas fa-times';
+            iobj.appendChild(ichi);
 
-      // 画像クリックしたときの処理  
-      const elmData = data[i];
-      new_element.onclick = async function(){
-
-        //const elmData = data[i];
-        let a = this.id;
-        popupImage(a); 
-        console.log(elmData);
-
-        if (!elmData.geo.exists) return
-
-        const hotels = await fetchJSON("/api/searchHotels", {
-        lat: elmData.geo.lat,
-        lng: elmData.geo.lng,
-        count: 20
-        });
-        console.log(hotels);
-
-        const spots = await fetchJSON("/api/findNerlyPlace", {
-        lat: elmData.geo.lat,
-        lon:elmData.geo.lng,
-        count:20
-        });
-        console.log(spots);
-    }
-      
-        let json_text=data[i].pref
-        img_element.appendChild(new_element);
-        
-        let pop_element = document.getElementById('data['+i+']');
-        let new_pop = document.createElement('div');
-        new_pop.className = 'popup';
-        new_pop.id = "js-popup" + i;
-        pop_element.appendChild(new_pop);
-    
-        let inner_element = document.getElementById("js-popup"+i);
-        let inner_div = document.createElement('div');
-        inner_div.className = 'popup-inner';
-        inner_div.id = "popup-inner"+i;
-        inner_element.appendChild(inner_div);
-
-        let background = document.getElementById("js-popup"+i);
-        let backchi = document.createElement("div");
-        backchi.className = "black-background";
-        backchi.id = "js-black-bg"+i;
-        background.appendChild(backchi);
-
-        i++;
-    }
-
-    let j = i;
-    i=0;
-    while(i != j){
-
-        let divobj = document.getElementById("popup-inner"+i);
-        let divchi = document.createElement('div');
-        divchi.className = "close-btn";
-        divchi.id = "js-close-btn"+i;
-        divchi.onclick=function(){
-            let test = this.id;
-            popupImage(test);
+            let aobj = document.getElementById('popup-inner' + i);
+            let achi = document.createElement('img');
+            achi.src = data[i].place;
+            aobj.appendChild(achi);
+            //console.log();
+            i++;
         }
-        divobj.appendChild(divchi);
-
-        let iobj = document.getElementById("js-close-btn"+i);
-        let ichi = document.createElement('i');
-        ichi.className = "fas fa-times";
-        iobj.appendChild(ichi);
-
-        let aobj = document.getElementById("popup-inner"+i);
-        let achi = document.createElement('img');
-        achi.src = data[i].place;
-        aobj.appendChild(achi);
-        //console.log();
-        i++;
-
     }
-
-  }
-    
 
     function popupImage(some) {
-
         let swap = some.match(/(\d+)/)[1];
-        if(!some) return;
+        if (!some) return;
 
-    
         let popup = document.getElementById(some);
 
-        let show = document.getElementById("data["+swap+"]");
-        let blackBg = document.getElementById('js-black-bg'+swap);
-        let closeBtn = document.getElementById('js-close-btn'+swap);
-        let showBtn = document.getElementById('js-popup'+swap);
+        let show = document.getElementById('data[' + swap + ']');
+        let blackBg = document.getElementById('js-black-bg' + swap);
+        let closeBtn = document.getElementById('js-close-btn' + swap);
+        let showBtn = document.getElementById('js-popup' + swap);
 
         closePopUp(show);
         closePopUp(blackBg);
         closePopUp(closeBtn);
         closePopUp(showBtn);
         function closePopUp(elem) {
-            
-            if(!elem) return;
+            if (!elem) return;
             //console.log(elem);
-                elem.classList.toggle('is-show');
-        
+            elem.classList.toggle('is-show');
         }
     }
-       
-    console.log("準備完了");
+
+    console.log('準備完了');
 
     search_function();
 
-document.getElementById(`id_search_button`).onclick = () => {
-    img_remove();
-    search_function();
-  };
+    document.getElementById(`id_search_button`).onclick = () => {
+        img_remove();
+        search_function();
+    };
 </script>

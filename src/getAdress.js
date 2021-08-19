@@ -6,19 +6,18 @@
  * @returns 住所（市まで）
  */
 export async function getAdressFromGeo(lat, lng) {
-  const url =
-    `http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x=${lng}&y=${lat}`;
+    const url = `http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x=${lng}&y=${lat}`;
 
-  const res = await fetch(url);
-  const json = await res.json();
+    const res = await fetch(url);
+    const json = await res.json();
 
-  // エラー！
-  if (!res.ok || json?.response.error) {
-    return "";
-  }
+    // エラー！
+    if (!res.ok || json?.response.error) {
+        return '';
+    }
 
-  const location = json.response.location[0];
-  const address = location.prefecture + location.city;
+    const location = json.response.location[0];
+    const address = location.prefecture + location.city;
 
-  return address;
+    return address;
 }
