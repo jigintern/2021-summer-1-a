@@ -1,7 +1,10 @@
+// 楽天トラベルキーワード検索API
+// https://webservice.rakuten.co.jp/api/keywordhotelsearch/
+
 import { getAdressFromGeo } from "./getAdress.js";
 
 /**
- * キーワードからホテル・宿を検索（楽天トラベルキーワード検索API）
+ * キーワードからホテル・宿を検索
  *
  * @param {string} keyword キーワード
  * @param {number} count 取得件数

@@ -1,7 +1,6 @@
 import { Geo3x3 } from "https://taisukef.github.io/Geo3x3/Geo3x3.js";
 import { CSV } from "https://js.sabae.cc/CSV.js";
 
-// あんまりよくない（起動しっぱなしだと更新されないので）
 let imgList = {};
 
 export async function getPicturesFromFind47(keyword) {
