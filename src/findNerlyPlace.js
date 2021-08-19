@@ -23,6 +23,7 @@ export async function findNerlyPlace(reqa, step) {
 
   const arr = [];
   for (let i = 0; i < step; i++) {
+    try{
     arr.push({
       url: urls[i].attributes["href"],
       img:
@@ -30,6 +31,9 @@ export async function findNerlyPlace(reqa, step) {
       label: urls[i].querySelector(".c-article-card__image>p").textContent
         .split("|")[1].trim(),
     });
+    }catch{
+      
+    }
   }
   return arr;
 }
