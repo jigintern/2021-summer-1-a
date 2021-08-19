@@ -1,7 +1,7 @@
 import { DOMParser, HTMLDocument } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 /**
  * 周辺の観光地を検索
- * @param {JSON} user {categori:"",lat:"",lon:""}lat->緯度
+ * @param {JSON} req {categori:"",lat:"",lon:""}lat->緯度
  * @param {int} step 取得する記事の数
  * @returns {Array} 取得したURLの配列
  */

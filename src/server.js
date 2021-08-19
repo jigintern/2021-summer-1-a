@@ -25,6 +25,17 @@ export class MyServer extends Server {
           ? searchPicsFromKeyword(req.keyword, req?.orderBy, req.count)
           : searchPicsFromHashtag(req?.tags, req?.orderBy, req.count);
       }
+      // 付近の観光地のurlを取得
+      case "findNerlyPlace": {
+        request = {categori:"all",lat:req.lat,lon:req.lon};
+        const results = findNerlyPlace(request,req.count);
+        return results;
+      }
+      //　関連したハッシュタグを取得
+      case "getHashtag": {
+        const results = getHashtag(req.keyword);
+        return results;
+      }
     }
   }
 }

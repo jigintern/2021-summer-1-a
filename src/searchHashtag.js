@@ -4,7 +4,6 @@ import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
  * キーワードから関連ハッシュタグを検索
  *
  * @param {string} keyword キーワード
- * @param {number} count 取得件数
  * @returns ハッシュタグの配列
  */
 export async function searchHashtag(keyword) {
