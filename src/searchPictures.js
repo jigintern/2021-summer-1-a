@@ -2,11 +2,35 @@ import { searchHashtag } from "./searchHashtag.js";
 import { getPicturesFromFind47 } from "./getPicturesFromFind47.js";
 import { getPicturesFromPixabay } from "./getPicturesFromPixabay.js";
 
-// 1つ前に検索したハッシュタグ名
 let prevTagNames = "";
-
-// ハッシュタグの検索結果
 let hashtags = [];
+
+/**
+ * 画像を条件でソート
+ *
+ * @param {Array} array 画像データの配列
+ * @param {string} orderBy ソート条件（asc | desc | rand）
+ * @returns ソートされた配列
+ */
+function sortPictures(array, orderBy) {
+  // 昇順・降順でソート
+  if (orderBy !== "rand") {
+    array.sort((a, b) =>
+      orderBy === "desc" ? b.view - a.view : a.view - b.view
+    );
+    return array;
+  }
+
+  // シャッフルする（Fisher-Yates）
+  for (let i = array.length - 1; i > 0; i--) {
+    const r = Math.floor(Math.random() * (i + 1));
+    const tmp = array[i];
+    array[i] = array[r];
+    array[r] = tmp;
+  }
+
+  return array;
+}
 
 /**
  * キーワードから関連する画像を取得
@@ -37,18 +61,14 @@ export async function searchPicsFromKeyword(keyword, orderBy, count) {
   // ソートしない
   if (orderBy === "none") return pictures;
 
-  pictures.sort((a, b) =>
-    orderBy === "desc" ? b.view - a.view : a.view - b.view
-  );
-
-  return pictures;
+  return sortPictures(pictures, orderBy);
 }
 
 /**
  *  ハッシュタグから画像を検索
  *
  * @param {string} tagNames ハッシュタグ（複数ある場合は半角スペース区切り）
- * @param {string} orderBy ソート順（昇順 : asc | 降順 : desc）
+ * @param {string} orderBy ソート順（昇順 : asc | 降順 : desc | 無し: none）
  * @param {number} count 取得件数
  */
 export async function searchPicsFromHashtag(tagNames, orderBy, count) {
@@ -68,10 +88,8 @@ export async function searchPicsFromHashtag(tagNames, orderBy, count) {
     if (pictures.length >= count) break;
   }
 
-  // ソート
-  pictures.sort((a, b) =>
-    orderBy === "desc" ? b.view - a.view : a.view - b.view
-  );
+  // ソートしない
+  if (orderBy === "none") return pictures;
 
-  return pictures;
+  return sortPictures(pictures, orderBy);
 }
