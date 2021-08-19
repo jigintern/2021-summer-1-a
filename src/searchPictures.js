@@ -57,6 +57,7 @@ export async function searchPicsFromKeyword(
   // 画像数が取得件数に満たない場合、pixabayで検索
   if (usePixabay && pictures.length < count) {
     pictures = pictures.concat(await getPicturesFromPixabay(keyword));
+  
   }
 
   // 配列の要素がcount以上なら切り取る
