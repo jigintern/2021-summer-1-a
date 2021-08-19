@@ -1,129 +1,131 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>test</title>
-</head>
-<body>
-	<table width="508" >
-		<tbody>
-		  <tr>
-			<td height="24" width="300"><input type="text" name="search_text" id="id_search_text" size="40"></td>
-			<td><button name="search_button" id="id_search_button" >検索</button></td>
-		  </tr>
-		</tbody>
-	  </table>
-    
-    <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
-<a href="https://webservice.rakuten.co.jp/" target="_blank"><img src="https://webservice.rakuten.co.jp/img/credit/200709/credit_31130.gif" border="0" alt="楽天ウェブサービスセンター" title="楽天ウェブサービスセンター" width="311" height="30"/></a>
-<!-- Rakuten Web Services Attribution Snippet TO HERE -->
-<div id="place"></div>
-    
+  </head>
+  <body>
+    <table width="508">
+      <tbody>
+        <tr>
+          <td height="24" width="300">
+            <input
+              type="text"
+              name="search_text"
+              id="id_search_text"
+              size="40"
+            />
+          </td>
+          <td>
+            <button name="search_button" id="id_search_button">検索</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-</body>
+    <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
+    <a href="https://webservice.rakuten.co.jp/" target="_blank"
+      ><img
+        src="https://webservice.rakuten.co.jp/img/credit/200709/credit_31130.gif"
+        border="0"
+        alt="楽天ウェブサービスセンター"
+        title="楽天ウェブサービスセンター"
+        width="311"
+        height="30"
+    /></a>
+    <!-- Rakuten Web Services Attribution Snippet TO HERE -->
+    <div id="place"></div>
+  </body>
 </html>
 <style>
-    .img_wrap img{
+  .img_wrap img {
     cursor: pointer;
     transition-duration: 0.3s;
-    }
-    .img_wrap:hover img{
+  }
+  .img_wrap:hover img {
     opacity: 0.6;
     transition-duration: 0.3s;
-    }
-    .img_wrap {
-        float:left;
-    }
-
+  }
+  .img_wrap {
+    float: left;
+  }
 </style>
 
-<script type=module>
+<script type="module">
+  import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
 
-    import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
-    
-    function img_remove(){
-        let all_element = document.querySelectorAll(".img_wrap");
-        all_element.forEach(element => {
-            element.remove();
-        });
+  function img_remove() {
+    let all_element = document.querySelectorAll(".img_wrap");
+    all_element.forEach((element) => {
+      element.remove();
+    });
+  }
+
+  async function search_function() {
+    const textbox = document.getElementById("id_search_text");
+    const data = await fetchJSON("/api/getPictures", {
+      keyword: textbox.value,
+      orderBy: "desc",
+      count: 40,
+    });
+
+    console.log(data);
+    console.log(textbox.value);
+
+    let i = 0;
+
+    while (data[i] != null) {
+      let img_parent = document.getElementById("place");
+      let new_div = document.createElement("div");
+
+      let size = data[i].view;
+      if (size > 1500) {
+        size = 400;
+      } else if (size > 500) {
+        size = 400;
+      } else if (size > 200) {
+        size = 200;
+      } else {
+        size = 100;
+      }
+
+      new_div.style.width = size + "px";
+      new_div.style.height = size + "px";
+      new_div.className = "img_wrap";
+      new_div.id = "data[" + i + "]";
+      new_div.style.background = "#000";
+      img_parent.appendChild(new_div);
+
+      // console.log(data[i].view);
+      // console.log(new_div.height);
+
+      let img_element = document.getElementById("data[" + i + "]");
+      let new_element = document.createElement("img");
+      new_element.className = "explain";
+      new_element.src = data[i].place;
+      new_element.width = size;
+      new_element.height = size;
+      new_element.style.objectFit = "cover";
+
+      let json_text = JSON.stringify(data[i].title);
+
+      // 画像がクリックされた
+      const elmData = data[i];
+      new_element.onclick = () => {
+        console.log(elmData);
+      };
+
+      img_element.appendChild(new_element);
+
+      i++;
     }
-    
-	async function search_function() {
-        const textbox = document.getElementById("id_search_text")
-        const data = await fetchJSON("/api/getPictures", { 
-            "keyword":textbox.value,
-            "orderBy":"desc",
-            "count":40
-        });
+  }
 
-        console.log(data);
-        console.log(textbox.value);
+  search_function();
 
-        /*
-        id_search_button.onclick = async() => {
-            const textbox = document.getElementById("id_search_text")
-            const data = await fetchJSON("/api/getPictures", {
-                "keyword":textbox.value,
-                "orderBy":"desc",
-                "count":40
-            });
-        }
-        */
-
-    	let i=0;
-	
-        while (data[i] != null){
-
-            let img_parent = document.getElementById('place');
-            let new_div = document.createElement('div');
-        
-            let size = data[i].view;
-            if(size>1500){
-                size=400;
-            }else if(size>500){
-                size=400;
-            }else if(size>200){
-                size=200;
-            }else{
-                size=100;
-            }
-        
-            new_div.style.width=size+"px";
-            new_div.style.height=size+"px";
-            new_div.className='img_wrap';
-            new_div.id='data['+i+']';
-            new_div.style.background="#000";
-            img_parent.appendChild(new_div);
-
-            // console.log(data[i].view);
-            // console.log(new_div.height);
-
-            let img_element = document.getElementById('data['+i+']');
-            let new_element = document.createElement('img');
-            new_element.className="explain"
-            new_element.src = data[i].place;
-            new_element.width = size;
-            new_element.height = size;
-            new_element.style.objectFit="cover";
-            
-            let json_text=JSON.stringify(data[i].title)
-
-            new_element.onclick = function() {
-                
-
-            };
-
-            img_element.appendChild(new_element);
-
-            i++;
-        }
-    }
-
+  document.getElementById(`id_search_button`).onclick = () => {
+    img_remove();
     search_function();
-
-    document.getElementById(`id_search_button`).onclick = () => {
-        //img_remove();
-        search_function();
-    }
+  };
 </script>
