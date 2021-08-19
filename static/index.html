@@ -20,6 +20,13 @@
           <td>
             <button name="search_button" id="id_search_button">検索</button>
           </td>
+		  <td>
+			<select name="sort" id="id_sort">
+				<option value="desc">降順</option>
+				<option value="asc">昇順</option>
+				<option value="random">ランダム</option>
+			</select>
+		  </td>
         </tr>
       </tbody>
     </table>
@@ -64,10 +71,12 @@
 
   async function search_function() {
     const textbox = document.getElementById("id_search_text");
+	const sort=document.getElementById("id_sort")
+	const sort_num=sort.selectedIndex
     const data = await fetchJSON("/api/getPictures", {
       keyword: textbox.value,
-      orderBy: "desc",
-      count: 40,
+      orderBy:sort.options[sort_num].value,
+      count: 200,
     });
 
     console.log(data);
