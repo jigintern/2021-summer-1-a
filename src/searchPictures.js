@@ -38,9 +38,15 @@ function sortPictures(array, orderBy) {
  * @param {string} keyword キーワード
  * @param {string} orderBy ソート順（昇順 : asc | 降順 : desc | 無し: none）
  * @param {number} count 取得件数
+ * @param {boolean} usePixabay pixabayの画像を含めるか
  * @returns
  */
-export async function searchPicsFromKeyword(keyword, orderBy, count) {
+export async function searchPicsFromKeyword(
+  keyword,
+  orderBy,
+  count,
+  usePixabay
+) {
   if (keyword === "" || count <= 0) return [];
 
   let pictures = [];
@@ -48,9 +54,9 @@ export async function searchPicsFromKeyword(keyword, orderBy, count) {
   // find47で検索
   pictures = await getPicturesFromFind47(keyword);
 
-  // pixabayで検索
-  if (pictures.length <= 0) {
-    pictures = await getPicturesFromPixabay(keyword);
+  // 画像数が取得件数に満たない場合、pixabayで検索
+  if (usePixabay && pictures.length < count) {
+    pictures = pictures.concat(await getPicturesFromPixabay(keyword));
   }
 
   // 配列の要素がcount以上なら切り取る
@@ -82,10 +88,15 @@ export async function searchPicsFromHashtag(tagNames, orderBy, count) {
   let pictures = [];
 
   for (const tag of hashtags) {
-    pictures = pictures.concat(await searchPicsFromKeyword(tag, "none", count));
+    pictures = pictures.concat(
+      await searchPicsFromKeyword(tag, "none", count, false)
+    );
 
     // 配列の要素がcount以上ならbreak
-    if (pictures.length >= count) break;
+    if (pictures.length >= count) {
+      pictures = pictures.slice(0, count);
+      break;
+    }
   }
 
   // ソートしない
