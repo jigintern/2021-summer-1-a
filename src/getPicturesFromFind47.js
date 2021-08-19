@@ -1,10 +1,15 @@
 import { Geo3x3 } from "https://taisukef.github.io/Geo3x3/Geo3x3.js";
 import { CSV } from "https://js.sabae.cc/CSV.js";
 
-// あんまりよくない（起動しっぱなしだと更新されないので）
 let imgList = {};
 
-export async function getFind47Images(keyword) {
+/**
+ * FIND47で画像を検索
+ *
+ * @param {string} keyword 検索キーワード
+ * @returns 画像情報の配列
+ */
+export async function getPicturesFromFind47(keyword) {
   // 画像リストを読込む
   if (Object.keys(imgList).length === 0) {
     imgList = CSV.toJSON(
@@ -22,6 +27,7 @@ export async function getFind47Images(keyword) {
         author: img.author,
         place: img.url_image,
         view: img.count_view,
+        from: "FIND47",
         url: img.url,
         authorurl: img.authorurl,
         geo: {

@@ -6,7 +6,7 @@ import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
  * @param {string} keyword キーワード
  * @returns ハッシュタグの配列
  */
-export async function getHashtag(keyword) {
+export async function searchHashtag(keyword) {
   const url = `https://instagram.userlocal.jp/hashtags/search?hashtags=${encodeURIComponent(
     keyword
   )}`;
