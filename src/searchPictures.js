@@ -59,7 +59,7 @@ export async function searchPicsFromKeyword(
     pictures = await getPicturesFromFind47(keyword);
 
     // 画像数が取得件数に満たない場合、pixabayで検索
-    if (usePixabay && pictures.length < count) {
+    if (pictures.length <= 0 || (usePixabay && pictures.length < count)) {
         pictures = pictures.concat(await getPicturesFromPixabay(keyword));
     }
 
