@@ -22,6 +22,7 @@ export async function getPicturesFromPixabay(keyword) {
         author: pic.user,
         place: pic.largeImageURL,
         view: pic.views,
+        from: "pixabay",
         url: pic.pageURL,
         authorurl: "",
         geo: { exists: false },

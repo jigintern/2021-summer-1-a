@@ -3,6 +3,12 @@ import { CSV } from "https://js.sabae.cc/CSV.js";
 
 let imgList = {};
 
+/**
+ * FIND47で画像を検索
+ *
+ * @param {string} keyword 検索キーワード
+ * @returns 画像情報の配列
+ */
 export async function getPicturesFromFind47(keyword) {
   // 画像リストを読込む
   if (Object.keys(imgList).length === 0) {
@@ -21,6 +27,7 @@ export async function getPicturesFromFind47(keyword) {
         author: img.author,
         place: img.url_image,
         view: img.count_view,
+        from: "FIND47",
         url: img.url,
         authorurl: img.authorurl,
         geo: {
