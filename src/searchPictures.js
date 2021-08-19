@@ -1,3 +1,4 @@
+import { sabae } from "./sabae.js";
 import { searchHashtag } from "./searchHashtag.js";
 import { getPicturesFromFind47 } from "./getPicturesFromFind47.js";
 import { getPicturesFromPixabay } from "./getPicturesFromPixabay.js";
@@ -48,6 +49,9 @@ export async function searchPicsFromKeyword(
   usePixabay
 ) {
   if (keyword === "" || count <= 0) return [];
+
+  // 鯖江
+  if (/鯖江|さばえ|サバエ|sabae/i.test(keyword)) return sabae();
 
   let pictures = [];
 
