@@ -192,6 +192,7 @@
                 let hotel_exp;
 
                 const hotelImgs = hotels.map(e=>e.imageUrl);
+                const hohetlurls = hotels.map(e=>e.infourl)
                 
                 let s = 0;
                 while(s < 5){
@@ -207,11 +208,37 @@
                         hotel_exp.id = "hotelImg" + s;
                         pop_hotel.appendChild(hotel_exp);
                         console.log(hotelImgs[s]);
+
+
                     }
                     s++;
 
                 }
-                
+
+                const spotImgs = spots.map(e=>e.img)
+                const apoturls = hotels.map(e=>e.url)
+                s = 0;
+                while(s < 5){
+                    if(spotImgs[s] != null){
+                        pop_hotel = document.getElementById('popup-inner'+i);
+                        hotel_exp = document.createElement("img");
+
+                        hotel_exp.src = spotImgs[s];
+                        hotel_exp.style.width = "100px";
+                        hotel_exp.style.height = "100px";
+                        hotel_exp.style.objectFit = 'cover';
+                        hotel_exp.style.margin = "5px"
+                        hotel_exp.id = "hotelImg" + s;
+                        pop_hotel.appendChild(hotel_exp);
+                        console.log(spotImgs[s]);
+
+
+                    }
+                    s++;
+
+                }
+
+
                 let a = this.id;
                 popupImage(a);
             };
