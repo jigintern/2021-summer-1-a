@@ -182,18 +182,27 @@
                     ? await getHotelsAndSpots(elmData.geo.lat, elmData.geo.lng)
                     : [[], []];
 
-                // console.log(elmData);
-                // console.log(hotels);
-                // console.log(spots);
+                console.log(elmData);
+                console.log(hotels);
+                console.log(spots);
 
                 class_remove('.hotel-link');
 
                 let pop_hotel;
                 let hotel_exp;
+                let hotel_atag;
+                let hotel_aelm;
 
-                // ホテル
                 for (let s = 0; hotels[s] != null; s++) {
-                    pop_hotel = document.getElementById('popup-inner' + i);
+                    hotel_atag = document.getElementById('popup-inner' + i);
+                    hotel_aelm = document.createElement('a');
+                    hotel_aelm.className = 'hotel-link';
+                    hotel_aelm.id = 'h-link' + s;
+                    hotel_aelm.target = '_blank';
+                    hotel_aelm.href = hotels[s].infoUrl;
+                    hotel_atag.appendChild(hotel_aelm);
+
+                    pop_hotel = document.getElementById('h-link' + s);
                     hotel_exp = document.createElement('img');
 
                     hotel_exp.title = `${hotels[s].name}\n${hotels[s].desc}`;
@@ -202,7 +211,6 @@
                     hotel_exp.style.height = '100px';
                     hotel_exp.style.objectFit = 'cover';
                     hotel_exp.style.margin = '5px';
-                    hotel_exp.className = 'hotel-link';
                     hotel_exp.id = 'hotelImg' + s;
                     pop_hotel.appendChild(hotel_exp);
                 }
@@ -211,10 +219,20 @@
 
                 let pop_spot;
                 let spot_exp;
+                let spot_atag;
+                let spot_aelm;
 
                 // 観光地
                 for (let s = 0; spots[s] != null; s++) {
-                    pop_spot = document.getElementById('popup-inner' + i);
+                    spot_atag = document.getElementById('popup-inner' + i);
+                    spot_aelm = document.createElement('a');
+                    spot_aelm.className = 'spot-link';
+                    spot_aelm.id = 's-link' + s;
+                    spot_aelm.target = '_blank';
+                    spot_aelm.href = spots[s].url;
+                    spot_atag.appendChild(spot_aelm);
+
+                    pop_spot = document.getElementById('s-link' + s);
                     spot_exp = document.createElement('img');
 
                     spot_exp.title = spots[s].title;
@@ -223,7 +241,6 @@
                     spot_exp.style.height = '100px';
                     spot_exp.style.objectFit = 'cover';
                     spot_exp.style.margin = '5px';
-                    spot_exp.className = 'spot-link';
                     spot_exp.id = 'spotImg' + s;
                     pop_spot.appendChild(spot_exp);
                 }
