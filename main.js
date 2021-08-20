@@ -1,5 +1,5 @@
-import dotenv from "https://taisukef.github.io/denolib/dotenv.js";
-import { MyServer } from "./src/server.js";
+import dotenv from 'https://taisukef.github.io/denolib/dotenv.js';
+import { MyServer } from './src/server.js';
 
 // .envから環境変数を読込む
 dotenv.config();
