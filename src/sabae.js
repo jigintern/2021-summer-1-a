@@ -37,7 +37,7 @@ export function sabae() {
             title: '鯖江についてもっと知る！',
             pref: '鯖江市',
             author: '',
-            place: 'https://www.megane.gr.jp/museum/main/wp-content/uploads/img01.jpg',
+            place: 'https://upload.wikimedia.org/wikipedia/ja/d/d3/%E5%9F%BA%E7%A4%8E%E8%87%AA%E6%B2%BB%E4%BD%93%E4%BD%8D%E7%BD%AE%E5%9B%B3_18207.svg',
             view: 1000000,
             from: '',
             url: 'https://www.city.sabae.fukui.jp/kanko/',
