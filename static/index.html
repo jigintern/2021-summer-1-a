@@ -191,27 +191,26 @@
                 let pop_hotel;
                 let hotel_exp;
 
-                const hotelImgs = hotels.map(e=>e.imageUrl);
-                
+                const hotelImgs = hotels.map((e) => e.imageUrl);
+
                 let s = 0;
-                while(s < 5){
-                    if(hotelImgs[s] != null){
-                        pop_hotel = document.getElementById('popup-inner'+i);
-                        hotel_exp = document.createElement("img");
+                while (s < 5) {
+                    if (hotelImgs[s] != null) {
+                        pop_hotel = document.getElementById('popup-inner' + i);
+                        hotel_exp = document.createElement('img');
 
                         hotel_exp.src = hotelImgs[s];
-                        hotel_exp.style.width = "100px";
-                        hotel_exp.style.height = "100px";
+                        hotel_exp.style.width = '100px';
+                        hotel_exp.style.height = '100px';
                         hotel_exp.style.objectFit = 'cover';
-                        hotel_exp.style.margin = "5px"
-                        hotel_exp.id = "hotelImg" + s;
+                        hotel_exp.style.margin = '5px';
+                        hotel_exp.id = 'hotelImg' + s;
                         pop_hotel.appendChild(hotel_exp);
                         console.log(hotelImgs[s]);
                     }
                     s++;
-
                 }
-                
+
                 let a = this.id;
                 popupImage(a);
             };
@@ -229,7 +228,7 @@
             let inner_div = document.createElement('div');
             inner_div.className = 'popup-inner';
             inner_div.id = 'popup-inner' + i;
-            inner_div.style.overflowyY = "scroll";
+            inner_div.style.overflowyY = 'scroll';
             inner_element.appendChild(inner_div);
 
             let background = document.getElementById('js-popup' + i);
@@ -260,15 +259,13 @@
             let achi = document.createElement('img');
             achi.src = data[i].place;
             achi.alt = data[i].title;
-            achi.style.width = "400px";
-            achi.style.height = "400px";
-            achi.style.objectFit = 'cover';
-            achi.style.border = "10px"
+            achi.style.height = '400px';
+            achi.style.objectFit = 'contain';
+            achi.style.border = '10px';
             achi.style.display = 'flex';
-            achi.style.margin = "5px"
-            achi.id = "modalImage"+i;
+            achi.style.margin = '5px';
+            achi.id = 'modalImage' + i;
             aobj.appendChild(achi);
-
         }
     }
 
