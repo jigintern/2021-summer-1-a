@@ -26,8 +26,9 @@ export async function searchHashtag(keyword) {
     }
 
     // 空ならこれを返す（本番環境でアクセスできなかったので...）
-    if (arr.length <= 0) {
-        console.log(res);
+    if (res.status != 200 || arr.length <= 0) {
+        console.error(res.status, res.statusText);
+
         return [
             '沖縄',
             '旅',
