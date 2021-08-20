@@ -124,11 +124,9 @@
 <script type="module">
     import { fetchJSON } from 'https://js.sabae.cc/fetchJSON.js';
 
-    function img_remove() {
-        let all_element = document.querySelectorAll('.img_wrap');
-        all_element.forEach((element) => {
-            element.remove();
-        });
+    function class_remove(className) {
+        let all_element = document.querySelectorAll(className);
+        all_element.forEach((element) => element.remove());
     }
 
     async function search_function() {
@@ -138,7 +136,7 @@
         const data = await fetchJSON('/api/getPictures', {
             keyword: textbox.value,
             orderBy: sort.options[sort_num].value,
-            count: 200
+            count: 100
         });
 
         for (let i = 0; data[i] != null; i++) {
@@ -188,43 +186,65 @@
                 console.log(hotels);
                 console.log(spots);
 
+                class_remove('.hotel-link');
+
                 let pop_hotel;
                 let hotel_exp;
+                let hotel_atag;
+                let hotel_aelm;
 
-                let atag;
-                let aelm;
+                for (let s = 0; hotels[s] != null; s++) {
+                    hotel_atag = document.getElementById('popup-inner' + i);
+                    hotel_aelm = document.createElement('a');
+                    hotel_aelm.className = 'hotel-link';
+                    hotel_aelm.id = 'h-link' + s;
+                    hotel_aelm.target = '_blank';
+                    hotel_aelm.href = hotels[s].infoUrl;
+                    hotel_atag.appendChild(hotel_aelm);
 
-                const hotelImgs = hotels.map(e=>e.imageUrl);
-                const hotelurl = hotels.map(e=>e.infoUrl)
-                
-                let s = 0;
-                while(s < 5){
-                    
-                    if(hotelImgs[s] != null && document.getElementById('link'+s)==null){
-                        atag = document.getElementById('popup-inner'+i);
-                        aelm = document.createElement("a");
-                        aelm.id = 'link'+s;
-                        aelm.target = "_blank"
-                        aelm.href = hotelurl[s]
-                        atag.appendChild(aelm);
+                    pop_hotel = document.getElementById('h-link' + s);
+                    hotel_exp = document.createElement('img');
 
-                        pop_hotel = document.getElementById('link'+s);
-                        hotel_exp = document.createElement("img");
-
-                        
-                        hotel_exp.src = hotelImgs[s];
-                        hotel_exp.style.width = "100px";
-                        hotel_exp.style.height = "100px";
-                        hotel_exp.style.objectFit = 'cover';
-                        hotel_exp.style.margin = "5px"
-                        hotel_exp.id = "hotelImg" + s;
-                        pop_hotel.appendChild(hotel_exp);
-                        console.log(hotelImgs[s]);
-                    }
-                    s++;
-
+                    hotel_exp.title = `${hotels[s].name}\n${hotels[s].desc}`;
+                    hotel_exp.src = hotels[s].imageUrl;
+                    hotel_exp.style.width = '100px';
+                    hotel_exp.style.height = '100px';
+                    hotel_exp.style.objectFit = 'cover';
+                    hotel_exp.style.margin = '5px';
+                    hotel_exp.id = 'hotelImg' + s;
+                    pop_hotel.appendChild(hotel_exp);
                 }
-                
+
+                class_remove('.spot-link');
+
+                let pop_spot;
+                let spot_exp;
+                let spot_atag;
+                let spot_aelm;
+
+                // 観光地
+                for (let s = 0; spots[s] != null; s++) {
+                    spot_atag = document.getElementById('popup-inner' + i);
+                    spot_aelm = document.createElement('a');
+                    spot_aelm.className = 'spot-link';
+                    spot_aelm.id = 's-link' + s;
+                    spot_aelm.target = '_blank';
+                    spot_aelm.href = spots[s].url;
+                    spot_atag.appendChild(spot_aelm);
+
+                    pop_spot = document.getElementById('s-link' + s);
+                    spot_exp = document.createElement('img');
+
+                    spot_exp.title = spots[s].title;
+                    spot_exp.src = spots[s].img;
+                    spot_exp.style.width = '100px';
+                    spot_exp.style.height = '100px';
+                    spot_exp.style.objectFit = 'cover';
+                    spot_exp.style.margin = '5px';
+                    spot_exp.id = 'spotImg' + s;
+                    pop_spot.appendChild(spot_exp);
+                }
+
                 let a = this.id;
                 popupImage(a);
             };
@@ -242,7 +262,7 @@
             let inner_div = document.createElement('div');
             inner_div.className = 'popup-inner';
             inner_div.id = 'popup-inner' + i;
-            inner_div.style.overflowyY = "scroll";
+            inner_div.style.overflowyY = 'scroll';
             inner_element.appendChild(inner_div);
 
             let background = document.getElementById('js-popup' + i);
@@ -273,20 +293,18 @@
             let achi = document.createElement('img');
             achi.src = data[i].place;
             achi.alt = data[i].title;
-            achi.style.width = "400px";
-            achi.style.height = "400px";
-            achi.style.objectFit = 'cover';
-            achi.style.border = "10px"
+            achi.style.height = '350px';
+            achi.style.objectFit = 'contain';
+            achi.style.border = '10px';
             achi.style.display = 'flex';
-            achi.style.margin = "5px"
-            achi.id = "modalImage"+i;
+            achi.style.margin = '5px';
+            achi.id = 'modalImage' + i;
             aobj.appendChild(achi);
-
         }
     }
 
     function search_once_again() {
-        img_remove();
+        class_remove('.img_wrap');
         search_function();
     }
 
