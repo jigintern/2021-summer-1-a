@@ -1,9 +1,9 @@
-import { sabae } from "./sabae.js";
-import { searchHashtag } from "./searchHashtag.js";
-import { getPicturesFromFind47 } from "./getPicturesFromFind47.js";
-import { getPicturesFromPixabay } from "./getPicturesFromPixabay.js";
+import { sabae } from './sabae.js';
+import { searchHashtag } from './searchHashtag.js';
+import { getPicturesFromFind47 } from './getPicturesFromFind47.js';
+import { getPicturesFromPixabay } from './getPicturesFromPixabay.js';
 
-let prevTagNames = "";
+let prevTagNames = '';
 let hashtags = [];
 
 /**
@@ -14,23 +14,23 @@ let hashtags = [];
  * @returns ソートされた配列
  */
 function sortPictures(array, orderBy) {
-  // 昇順・降順でソート
-  if (orderBy !== "rand") {
-    array.sort((a, b) =>
-      orderBy === "desc" ? b.view - a.view : a.view - b.view
-    );
+    // 昇順・降順でソート
+    if (orderBy !== 'rand') {
+        array.sort((a, b) =>
+            orderBy === 'desc' ? b.view - a.view : a.view - b.view
+        );
+        return array;
+    }
+
+    // シャッフルする（Fisher-Yates）
+    for (let i = array.length - 1; i > 0; i--) {
+        const r = Math.floor(Math.random() * (i + 1));
+        const tmp = array[i];
+        array[i] = array[r];
+        array[r] = tmp;
+    }
+
     return array;
-  }
-
-  // シャッフルする（Fisher-Yates）
-  for (let i = array.length - 1; i > 0; i--) {
-    const r = Math.floor(Math.random() * (i + 1));
-    const tmp = array[i];
-    array[i] = array[r];
-    array[r] = tmp;
-  }
-
-  return array;
 }
 
 /**
@@ -43,35 +43,35 @@ function sortPictures(array, orderBy) {
  * @returns
  */
 export async function searchPicsFromKeyword(
-  keyword,
-  orderBy,
-  count,
-  usePixabay,
+    keyword,
+    orderBy,
+    count,
+    usePixabay
 ) {
-  if (keyword === "" || count <= 0) return [];
+    if (keyword === '' || count <= 0) return [];
 
-  // 鯖江
-  if (/鯖江|さばえ|サバエ|sabae/i.test(keyword)) return sabae();
+    // 鯖江
+    if (/鯖江|さばえ|サバエ|sabae/i.test(keyword)) return sabae();
 
-  let pictures = [];
+    let pictures = [];
 
-  // find47で検索
-  pictures = await getPicturesFromFind47(keyword);
+    // find47で検索
+    pictures = await getPicturesFromFind47(keyword);
 
-  // 画像数が取得件数に満たない場合、pixabayで検索
-  if (usePixabay && pictures.length < count) {
-    pictures = pictures.concat(await getPicturesFromPixabay(keyword));
-  }
+    // 画像数が取得件数に満たない場合、pixabayで検索
+    if (pictures.length <= 0 || (usePixabay && pictures.length < count)) {
+        pictures = pictures.concat(await getPicturesFromPixabay(keyword));
+    }
 
-  // 配列の要素がcount以上なら切り取る
-  if (pictures.length > count) {
-    pictures = pictures.slice(0, count);
-  }
+    // 配列の要素がcount以上なら切り取る
+    if (pictures.length > count) {
+        pictures = pictures.slice(0, count);
+    }
 
-  // ソートしない
-  if (orderBy === "none") return pictures;
+    // ソートしない
+    if (orderBy === 'none') return pictures;
 
-  return sortPictures(pictures, orderBy);
+    return sortPictures(pictures, orderBy);
 }
 
 /**
@@ -82,29 +82,29 @@ export async function searchPicsFromKeyword(
  * @param {number} count 取得件数
  */
 export async function searchPicsFromHashtag(tagNames, orderBy, count) {
-  // 関連するハッシュタグを検索
-  if (prevTagNames !== tagNames) {
-    hashtags = await searchHashtag(tagNames || "#旅行");
-  }
-
-  prevTagNames = tagNames;
-
-  let pictures = [];
-
-  for (const tag of hashtags) {
-    pictures = pictures.concat(
-      await searchPicsFromKeyword(tag, "none", count, false),
-    );
-
-    // 配列の要素がcount以上ならbreak
-    if (pictures.length >= count) {
-      pictures = pictures.slice(0, count);
-      break;
+    // 関連するハッシュタグを検索
+    if (prevTagNames !== tagNames) {
+        hashtags = await searchHashtag(tagNames || '#旅行');
     }
-  }
 
-  // ソートしない
-  if (orderBy === "none") return pictures;
+    prevTagNames = tagNames;
 
-  return sortPictures(pictures, orderBy);
+    let pictures = [];
+
+    for (const tag of hashtags) {
+        pictures = pictures.concat(
+            await searchPicsFromKeyword(tag, 'none', count, false)
+        );
+
+        // 配列の要素がcount以上ならbreak
+        if (pictures.length >= count) {
+            pictures = pictures.slice(0, count);
+            break;
+        }
+    }
+
+    // ソートしない
+    if (orderBy === 'none') return pictures;
+
+    return sortPictures(pictures, orderBy);
 }

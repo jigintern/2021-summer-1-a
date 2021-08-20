@@ -1,7 +1,7 @@
 // 楽天トラベルキーワード検索API
 // https://webservice.rakuten.co.jp/api/keywordhotelsearch/
 
-import { getAdressFromGeo } from "./getAdress.js";
+import { getAdressFromGeo } from './getAdress.js';
 
 /**
  * キーワードからホテル・宿を検索
@@ -11,41 +11,40 @@ import { getAdressFromGeo } from "./getAdress.js";
  * @returns ホテルのリスト
  */
 export async function searchHotelsFromKeyword(keyword, count) {
-  const appId = Deno.env.get("RAKUTEN_APP_ID");
+    const appId = Deno.env.get('RAKUTEN_APP_ID');
 
-  // 取得件数
-  const hits = count || 10;
+    // 取得件数
+    const hits = count || 10;
 
-  const encodedKeyword = encodeURIComponent(keyword);
-  const url =
-    `https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426?format=json&keyword=${encodedKeyword}&hits=${hits}&applicationId=${appId}`;
+    const encodedKeyword = encodeURIComponent(keyword);
+    const url = `https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426?format=json&keyword=${encodedKeyword}&hits=${hits}&applicationId=${appId}`;
 
-  const res = await fetch(url);
-  const json = await res.json();
+    const res = await fetch(url);
+    const json = await res.json();
 
-  // エラーが返ってきた
-  if (!res.ok) {
-    console.error(json);
-    return [];
-  }
+    // エラーが返ってきた
+    if (!res.ok) {
+        console.error(json);
+        return [];
+    }
 
-  const results = json.hotels.map((e) => {
-    const info = e.hotel[0].hotelBasicInfo;
+    const results = json.hotels.map((e) => {
+        const info = e.hotel[0].hotelBasicInfo;
 
-    return {
-      name: info.hotelName,
-      desc: info.hotelSpecial || "",
-      tel: info.telephoneNo,
-      address: `${info.address1}${info.address2}`,
-      infoUrl: info.hotelInformationUrl || "",
-      planUrl: info.planListUrl || "",
-      imageUrl: info.hotelImageUrl,
-      reviewAvg: info.reviewAverage || 0,
-      reviewText: info.userReview || "",
-    };
-  });
+        return {
+            name: info.hotelName,
+            desc: info.hotelSpecial || '',
+            tel: info.telephoneNo,
+            address: `${info.address1}${info.address2}`,
+            infoUrl: info.hotelInformationUrl || '',
+            planUrl: info.planListUrl || '',
+            imageUrl: info.hotelImageUrl,
+            reviewAvg: info.reviewAverage || 0,
+            reviewText: info.userReview || ''
+        };
+    });
 
-  return results;
+    return results;
 }
 
 /**
@@ -56,10 +55,10 @@ export async function searchHotelsFromKeyword(keyword, count) {
  * @param {number} count 取得件数
  */
 export async function searchHotelsFromGeo(lat, lng, count) {
-  const address = await getAdressFromGeo(lat, lng);
+    const address = await getAdressFromGeo(lat, lng);
 
-  // エラー！
-  if (address === "") return [];
+    // エラー！
+    if (address === '') return [];
 
-  return searchHotelsFromKeyword(address, count);
+    return searchHotelsFromKeyword(address, count);
 }
