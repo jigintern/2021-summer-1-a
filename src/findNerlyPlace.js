@@ -5,12 +5,12 @@ import { DOMParser } from 'https://deno.land/x/deno_dom/deno-dom-wasm.ts';
  * @param {int} step 取得する記事の数
  * @returns {Array} 取得したURLの配列
  */
-export async function findNerlyPlace(reqa, step) {
-    const req = {
-        categori: 'all',
-        lat: 34.11994655760192,
-        lon: 133.03345334944325
-    };
+export async function findNerlyPlace(req, step) {
+    // const req = {
+    //     categori: 'all',
+    //     lat: 34.11994655760192,
+    //     lon: 133.03345334944325
+    // };
     const url = `https://travel.navitime.com/ja/area/jp/interest/${req.categori}/?lat=${req.lat}&lon=${req.lon}`;
     //https://travel.navitime.com/ja/area/jp/interest/all/?lat=34.11994655760192&lon=133.03345334944325
     const res = await fetch(url);
