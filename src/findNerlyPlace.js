@@ -2,7 +2,7 @@ import { DOMParser } from 'https://deno.land/x/deno_dom/deno-dom-wasm.ts';
 /**
  * 周辺の観光地を検索
  * @param {JSON} req {categori:"",lat:"",lon:""}lat->緯度
- * @param {int} step 取得する記事の数
+ * @param {int} step 取得する記事の数(max:16)
  * @returns {Array} 取得したURLの配列
  */
 export async function findNerlyPlace(req, step) {
@@ -30,7 +30,8 @@ export async function findNerlyPlace(req, step) {
                 label: urls[i]
                     .querySelector('.c-article-card__image>p')
                     .textContent.split('|')[1]
-                    .trim()
+                    .trim(),
+                title: urls[i].querySelector(".c-article-card__name").textContent.trim()
             });
         } catch {}
     }
