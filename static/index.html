@@ -190,40 +190,39 @@
 
                 let pop_hotel;
                 let hotel_exp;
+                let atag;
+                let aelm;
 
-                // ホテル
-                for (let s = 0; hotels[s] != null; s++) {
-                    pop_hotel = document.getElementById('popup-inner' + i);
-                    hotel_exp = document.createElement('img');
-
-                    hotel_exp.title = `${hotels[s].name}\n${hotels[s].desc}`;
-                    hotel_exp.src = hotels[s].imageUrl;
-                    hotel_exp.style.width = '100px';
-                    hotel_exp.style.height = '100px';
-                    hotel_exp.style.objectFit = 'cover';
-                    hotel_exp.style.margin = '5px';
-                    hotel_exp.id = 'hotelImg' + s;
-                    pop_hotel.appendChild(hotel_exp);
-                }
-
-                let pop_spot;
-                let spot_exp;
+                const hotelImgs = hotels.map(e=>e.imageUrl);
+                const hotelurl = hotels.map(e=>e.infoUrl)
                 
-                // 観光地
-                for (let s = 0; spots[s] != null; s++){
-                    pop_spot = document.getElementById('popup-inner' + i);
-                    spot_exp = document.createElement('img');
+                let s = 0;
+                while(s < 5){
+                    if(hotelImgs[s] != null){
+                        atag = document.getElementById('popup-inner'+i);
+                        aelm = document.createElement("a");
+                        aelm.id = 'link'+i
+                        aelm.target = "_blank"
+                        aelm.href = hotelurl[s]
+                        atag.appendChild(aelm);
 
-                    spot_exp.title = spots[s].title;
-                    spot_exp.src = spots[s].img;
-                    spot_exp.style.width = '100px';
-                    spot_exp.style.height = '100px';
-                    spot_exp.style.objectFit = 'cover';
-                    spot_exp.style.margin = '5px';
-                    spot_exp.id = 'spotImg' + s;
-                    pop_spot.appendChild(spot_exp);
+                        pop_hotel = document.getElementById('link'+i);
+                        hotel_exp = document.createElement("img");
+
+                        
+                        hotel_exp.src = hotelImgs[s];
+                        hotel_exp.style.width = "100px";
+                        hotel_exp.style.height = "100px";
+                        hotel_exp.style.objectFit = 'cover';
+                        hotel_exp.style.margin = "5px"
+                        hotel_exp.id = "hotelImg" + s;
+                        pop_hotel.appendChild(hotel_exp);
+                        console.log(hotelImgs[s]);
+                    }
+                    s++;
+
                 }
-
+                
                 let a = this.id;
                 popupImage(a);
             };
