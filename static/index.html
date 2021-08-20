@@ -3,50 +3,73 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>test</title>
+        <title>pulchra</title>
     </head>
     <link
         href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
         rel="stylesheet"
     />
     <body>
-        <div>
-            <input
-                class="keyword-inp-item"
-                type="text"
-                name="search_text"
-                id="id_search_text"
-                size="40"
-            />
-            <select name="sort" class="keyword-inp-item" id="id_sort">
-                <option value="desc">降順</option>
-                <option value="asc">昇順</option>
-                <option value="rand">ランダム</option>
-            </select>
-            <button
-                name="search_button"
-                class="search-btn"
-                id="id_search_button"
-            >
-                検索
-            </button>
-        </div>
-
-        <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
-        <a href="https://webservice.rakuten.co.jp/" target="_blank"
-            ><img
-                src="https://webservice.rakuten.co.jp/img/credit/200709/credit_31130.gif"
-                border="0"
-                alt="楽天ウェブサービスセンター"
-                title="楽天ウェブサービスセンター"
-                width="311"
-                height="30"
-        /></a>
-        <!-- Rakuten Web Services Attribution Snippet TO HERE -->
-        <div id="place"></div>
+        <header>
+            <div class="logo">
+                <img src="./logo.png" alt="pulchra" width="250" />
+            </div>
+            <div class="input-area">
+                <input
+                    class="keyword-inp-item"
+                    type="text"
+                    name="search_text"
+                    id="id_search_text"
+                    size="40"
+                />
+                <select name="sort" class="keyword-inp-item" id="id_sort">
+                    <option value="desc">降順</option>
+                    <option value="asc">昇順</option>
+                    <option value="rand">ランダム</option>
+                </select>
+                <button
+                    name="search_button"
+                    class="search-btn"
+                    id="id_search_button"
+                >
+                    検索
+                </button>
+            </div>
+        </header>
+        <main>
+            <div id="place"></div>
+        </main>
+        <footer>
+            <!-- Rakuten Web Services Attribution Snippet FROM HERE -->
+            <a href="https://webservice.rakuten.co.jp/" target="_blank"
+                ><img
+                    src="https://webservice.rakuten.co.jp/img/credit/200709/credit_31130.gif"
+                    border="0"
+                    alt="楽天ウェブサービスセンター"
+                    title="楽天ウェブサービスセンター"
+                    width="311"
+                    height="30"
+            /></a>
+            <!-- Rakuten Web Services Attribution Snippet TO HERE -->
+        </footer>
     </body>
 </html>
 <style>
+    body {
+        display: flex;
+        flex-flow: column;
+        min-height: 100vh;
+    }
+    main {
+        flex: 1;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+    .input-area {
+        margin-bottom: 1rem;
+    }
     .img_wrap img {
         cursor: pointer;
         transition-duration: 0.3s;
@@ -118,6 +141,11 @@
     .search-btn {
         margin: 0 0.5rem;
         padding: 0.25rem 1rem;
+    }
+    .rakuten {
+        position: absolute;
+        bottom: 0;
+        padding: 30px 0;
     }
 </style>
 ​
@@ -352,7 +380,7 @@
 
     console.log('準備完了');
 
-    search_function();
+    await search_function();
 
     document.getElementById(`id_sort`).onchange = () => search_once_again();
 
