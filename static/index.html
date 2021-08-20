@@ -199,15 +199,16 @@
                 
                 let s = 0;
                 while(s < 5){
-                    if(hotelImgs[s] != null){
+                    
+                    if(hotelImgs[s] != null && document.getElementById('link'+s)==null){
                         atag = document.getElementById('popup-inner'+i);
                         aelm = document.createElement("a");
-                        aelm.id = 'link'+i
+                        aelm.id = 'link'+s;
                         aelm.target = "_blank"
                         aelm.href = hotelurl[s]
                         atag.appendChild(aelm);
 
-                        pop_hotel = document.getElementById('link'+i);
+                        pop_hotel = document.getElementById('link'+s);
                         hotel_exp = document.createElement("img");
 
                         
