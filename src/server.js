@@ -33,7 +33,7 @@ export class MyServer extends Server {
             }
             // 付近の観光地のurlを取得
             case 'findNerlyPlace': {
-                const request = { categori: 'all', lat: req.lat, lon: req.lon };
+                const request = { category: 'all', lat: req.lat, lon: req.lon };
                 const results = findNerlyPlace(request, req.count);
                 return results;
             }
